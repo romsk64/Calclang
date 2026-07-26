@@ -13,19 +13,19 @@
 #include "types.h"
 #define MAX_BUFFER_SIZE 2048
 
-char **splitIntoLines(const char *const filename, udlong *length) { // массив строк файла
+char **splitIntoLines(const char *const filename, udlong *const length) { // массив строк файла
     char **resultArray = NULL;
     char *buffer = malloc(MAX_BUFFER_SIZE);
-    udlong lineCount = 0;
+    *length = 0;
 
     if (isFileExists(filename)) {
         FILE *file = fopen(filename, "r");
 
-        for (lineCount; fgets(buffer, MAX_BUFFER_SIZE, file) != NULL; lineCount++); // подсчет количества строк
-        resultArray = calloc(lineCount, sizeof(char*));
+        for (*length; fgets(buffer, MAX_BUFFER_SIZE, file) != NULL; (*length)++); // подсчет количества строк
+        resultArray = calloc(*length, sizeof(char*));
         rewind(file);
 
-        for (udlong line = 0; fgets(buffer, MAX_BUFFER_SIZE, file) != NULL; line++) {
+        for (udlong line = 0; line < *length && fgets(buffer, MAX_BUFFER_SIZE, file) != NULL; line++) {
             size_t lineLength = strlen(buffer);
             resultArray[line] = malloc(lineLength + 1);
 
