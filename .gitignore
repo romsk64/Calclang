@@ -2,3 +2,7 @@
 .astanalys/
 
 tests/
+
+# compiled files
+bin/
+objects/
