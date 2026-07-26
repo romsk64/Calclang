@@ -1,0 +1,31 @@
+; ассемблер для CLVM
+; программа калькулятор
+
+section .srdata
+    greeting db "Calculator on Calclang!", 10
+    num1 db "Number 1: "
+    num2 db "Number 2: "
+    result db "Result: "
+    newline db 10
+
+section .text
+    print greeting
+
+    print num1
+    input bx 0
+
+    print num2
+    input bx 1
+
+    dup bx 0, bx 2
+    dup bx 1, bx 3
+
+    add bx 0, bx 1
+    print result
+    printmem bx 0
+    print newline
+
+    sub bx 2, bx 3
+    print result
+    printmem bx 3
+    print newline
