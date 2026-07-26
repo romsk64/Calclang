@@ -1,11 +1,16 @@
 #ifndef FILESTR_H
 #define FILESTR_H
 
-char **splitIntoLines(const char *const filename);
+#include "types.h"
+
+char **splitIntoLines(const char *const filename, udlong *length);
 char **splitIntoSymbols(const char *const filename, const char *const symbols);
 
 void trimSpaces(char *const string);
-void trimSpacesAfterSymbols(char *const string, const char *const symbols);
-void trimSpacesBeforeSymbols(char *const string, const char *const symbols);
+void trimAfterSymbols(char *const string, const char *const symbols);
+// void trimBeforeSymbols(char *const string, const char *const symbols);
+
+int countSymbolsInFile(const char *const filename, const char *const symbols);
+int findSymbols(const char *const symbols); // найти символ, вернуть его индекс в массиве или -1
 
 #endif

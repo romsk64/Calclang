@@ -4,26 +4,41 @@
 
 #include <stdio.h>
 #include "utils/fexists.h"
+#include "utils/filestr.h"
+#include "utils/types.h"
 
-typedef enum bytecodecmd {
-    NOTHING, // 0x00
-    d
-} bytecodecmd;
+enum bytecodecmd {
+    PRINT = 0x01,
+    PRINTMEM = 0x02,
+    INPUT = 0x03,
+    DUP = 0x04,
+    ADD = 0x05,
+    SUB = 0x06,
+    MUL = 0x07, // умножение
+    DIV = 0x08  // деление
+};
 
-int ascomp(const char *filename, const char *outfilename) {
-    FILE *file = fopen(filename, "r");
-    // FILE *bytecode = fopen(outfilename, "wb");
+// char **clearCode(const char *filename) {
 
-    fclose(file);
-    // fclose(bytecode);
+// }
 
-    bytecodecmd my = NOTHING;
+int ascomp(const char *const filename, const char *const outfilename) {
+    udlong arrlength;
+    char **arr = splitIntoLines(filename, &arrlength);
+
+    for (udlong line = 0; line < arrlength; line++) {
+        trimSpaces(line);
+        trimAfterSymbols(line, ";");
+    }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
+    char *filename, *outputfilename;
+
     if (argc == 3) {
         if (isFileExists(argv[1])) {
-
+            filename = argv[1];
+            outputfilename = argv[2];
         } else {
             perror("File not exists!\n");
             return 1;
