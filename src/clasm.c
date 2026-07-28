@@ -27,8 +27,8 @@ int ascomp(const char *const filename, const char *const outfilename) {
     char **arr = splitIntoLines(filename, &arrlength);
 
     for (udlong line = 0; line < arrlength; line++) {
-        trimSpaces(line);
         trimAfterSymbols(line, ";");
+        trimSpaces(line);
     }
 }
 
@@ -40,14 +40,14 @@ int main(int argc, char **argv) {
             filename = argv[1];
             outputfilename = argv[2];
         } else {
-            perror("File not exists!\n");
+            printf("File not exists!\n");
             return 1;
         }
     } else if (argc < 2) {
-        perror("Too little arguments!\n");
+        printf("Too little arguments!\n");
         return 1;
     } else if (argc > 3) {
-        perror("Too many arguments!\n");
+        printf("Too many arguments!\n");
         return 1;
     }
 
