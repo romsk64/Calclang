@@ -43,6 +43,14 @@ int main(int argc, char **argv) {
             printf("File not exists!\n");
             return 1;
         }
+    } else if (argc == 2) {
+        if (isFileExists(argv[1])) {
+            filename = argv[1];
+            outputfilename = "a.cl";
+        } else {
+            printf("File not exists!\n");
+            return 1;
+        }
     } else if (argc < 2) {
         printf("Too little arguments!\n");
         return 1;
