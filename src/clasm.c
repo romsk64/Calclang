@@ -3,9 +3,9 @@
  */
 
 #include <stdio.h>
+#include <stddef.h>
 #include "utils/fexists.h"
 #include "utils/filestr.h"
-#include "utils/types.h"
 
 enum bytecodecmd {
     PRINT = 0x01,
@@ -23,10 +23,10 @@ enum bytecodecmd {
 // }
 
 int ascomp(const char *const filename, const char *const outfilename) {
-    udlong arrlength;
+    size_t arrlength;
     char **arr = splitIntoLines(filename, &arrlength);
 
-    for (udlong line = 0; line < arrlength; line++) {
+    for (size_t line = 0; line < arrlength; line++) {
         trimAfterSymbols(line, ";");
         trimSpaces(line);
     }
