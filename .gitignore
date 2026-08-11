@@ -7,3 +7,8 @@ tests/
 # compiled files
 bin/
 objects/
+
+# comiled files not in special dirctories
+src/**/*.exe
+src/**/*.obj
+src/**/*.o

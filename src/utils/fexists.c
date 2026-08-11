@@ -6,7 +6,6 @@ int isFileExists(const char *const string) { // 0 - не существет, 1 -
     FILE *file = fopen(string, "r");
 
     if (file == NULL) {
-        fclose(file);
         return 0;
     }
 
