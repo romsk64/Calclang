@@ -6,17 +6,7 @@
 #include <stddef.h>
 #include "utils/fexists.h"
 #include "utils/filestr.h"
-
-enum bytecodecmd {
-    PRINT = 0x01,
-    PRINTMEM = 0x02,
-    INPUT = 0x03,
-    DUP = 0x04,
-    ADD = 0x05,
-    SUB = 0x06,
-    MUL = 0x07, // умножение
-    DIV = 0x08  // деление
-};
+#include "bytecode.h"
 
 // char **clearCode(const char *filename) {
 
@@ -46,7 +36,7 @@ int main(int argc, char **argv) {
     } else if (argc == 2) {
         if (isFileExists(argv[1])) {
             filename = argv[1];
-            outputfilename = "a.cl";
+            outputfilename = "a.bin";
         } else {
             printf("File not exists!\n");
             return 1;

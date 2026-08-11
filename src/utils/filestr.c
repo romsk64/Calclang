@@ -47,7 +47,7 @@ char **splitIntoLines(const char *const filename, size_t *const length) { // м�
                 if (tempArray == NULL) {
                     printf("Error of mwmory allocation (returned NULL)!");
 
-                    freeSplitLines(resultArray, line);
+                    freeSplitLines(resultArray, &line);
                     fclose(file);
                     return NULL;
                 } else {
@@ -74,7 +74,7 @@ char **splitIntoSymbols(const char *const filename, const char *const symbols) {
 
 }
 
-void freeSplitLines(const char **const splitLines, const size_t *const length) {
+void freeSplitLines(char **const splitLines, const size_t *const length) {
     for (size_t i = 0; i < *length; i++) {
         free(splitLines[i]);
     }
@@ -121,6 +121,11 @@ int trimAfterSymbols(char *const string, const char *const symbols) { // -1 ес
     bool isFound = false;
 
     size_t symbolsIndex = findSymbols(string, symbols, &isFound);
+    if (isFound == false) {
+        return -1;
+    }
+
+    memmove(string + symbolsIndex, string + strlen(string), 1);
 
     return 0;
 }

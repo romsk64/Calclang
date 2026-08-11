@@ -6,7 +6,7 @@
 
 char **splitIntoLines(const char *const filename, size_t *const length);
 char **splitIntoSymbols(const char *const filename, const char *const symbols);
-void freeSplitLines(const char **const splitLines, const size_t *const length);
+void freeSplitLines(char **const splitLines, const size_t *const length);
 
 int trimSpaces(char *const string);
 int trimAfterSymbols(char *const string, const char *const symbols);
