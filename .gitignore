@@ -1,8 +1,14 @@
 .old/
 .astanalys/
 .vscode/
+.help/
 
 tests/
+
+**/*.swp
+
+# now only c
+**/*.cc
 
 # compiled files
 bin/
@@ -12,3 +18,5 @@ objects/
 src/**/*.exe
 src/**/*.obj
 src/**/*.o
+
+src/calclangold.c

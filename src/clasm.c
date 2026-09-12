@@ -6,13 +6,10 @@
 #include <stddef.h>
 #include "utils/fexists.h"
 #include "utils/filestr.h"
+#include "utils/swapvalue.h"
 #include "bytecode.h"
 
-// char **clearCode(const char *filename) {
-
-// }
-
-int ascomp(const char *const filename, const char *const outfilename) {
+int ascomp(const char *const filename, const char *const outputfilename) {
     size_t arrlength;
     char **arr = splitIntoLines(filename, &arrlength);
 

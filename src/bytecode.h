@@ -1,3 +1,5 @@
+#define VERSION_VM "0.0"
+
 enum bytecodecmd {
     PRINT = 0x01,
     PRINTMEM = 0x02,
