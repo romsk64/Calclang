@@ -7,10 +7,12 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 #include "utils/fexists.h"
 #include "utils/swapvalue.h"
 #include "bytecode.h"
 
+#define ERRCODE_1 "[calclang]: Incorrect sintax of running parameters! (code 1)"
 #define ERRCODE_2 "[calclang]: Incorrect signature of executable file! (code 2)"
 #define ERRCODE_3 "[calclang]: Error of reading file! (code 3)"
 #define ERRCODE_4 "[calclang]: Error of memory allocation! (code 4)"
@@ -22,6 +24,14 @@
 #define METADATA_LENGTH 13
 #define INT32_SIZE sizeof(int32_t)
 
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+    #define __ORDER_LITTLE_ENDIAN_DEFINED__
+#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    #define __ORDER_BIG_ENDIAN_DEFINED__
+#else
+    #error "Unsupported byte order!"
+#endif
+
 /*
  * PUSH
  * POP
@@ -29,7 +39,6 @@
  * SUB
  * MUL
  * DIV
- * DIVMDXPOW2 - деление с операндом во второй степени
 */
 
 typedef struct CLVMStack {
@@ -37,42 +46,6 @@ typedef struct CLVMStack {
     uint64_t *stackTopPtr;
 } CLVMStack;
 
-/*int8_t stackPop_int8(CLVMStack *stack) {
-    int8_t result = *(int8_t *)(stack->stackTopPtr);
-    (stack->stackTopPtr)--;
-
-    return result;
-}
-uint8_t stackPop_uint8(CLVMStack *stack) {
-    uint8_t result = *(uint8_t *)(stack->stackTopPtr);
-    (stack->stackTopPtr)--;
-
-    return result;
-}
-int16_t stackPop_int16(CLVMStack *stack) {
-    int16_t result = *(int16_t *)(stack->stackTopPtr);
-    (stack->stackTopPtr) -= 2;
-
-    return result;
-}
-uint16_t stackPop_uint16(CLVMStack *stack) {
-    uint16_t result = *(uint16_t *)(stack->stackTopPtr);
-    (stack->stackTopPtr) -= 2;
-
-    return result;
-}
-int32_t stackPop_int32(CLVMStack *stack) {
-    int32_t result = *(int32_t *)(stack->stackTopPtr);
-    (stack->stackTopPtr) -= 4;
-
-    return result;
-}
-uint32_t stackPop_uint32(CLVMStack *stack) {
-    uint32_t result = *(uint32_t *)(stack->stackTopPtr);
-    (stack->stackTopPtr) -= 4;
-
-    return result;
-}*/
 int64_t stackPop_int64(CLVMStack *stack) {
     int64_t result = *(int64_t *)(stack->stackTopPtr);
     (stack->stackTopPtr) -= 1;
@@ -85,10 +58,6 @@ uint64_t stackPop_uint64(CLVMStack *stack) {
 
     return result;
 }
-/*
-void stackPush_int8(CLVMStack *stack, int8_t value) {
-    int8_t *valuePtr = (int8_t *)(stack->stackTopPtr);
-}*/
 
 void stackPush_int64(CLVMStack *stack, int64_t value) {
     (stack->stackTopPtr) += 1;
@@ -224,48 +193,41 @@ size_t getFileLength(FILE *restrict file, bool *restrict isError) {
     return result;
 }
 
-bool readRegisterSize(FILE *restrict file, uint32_t *restrict registerSize) { // true если ошибка
-    if (fread(registerSize, sizeof(uint32_t), 1, file) != 1) {
-        fclose(file);
-        printf(ERRCODE_3);
-        return true;
-    }
+int executeBytecode(FILE *restrict file, uint64_t stackSize) {
+    // доделать потом
 
-    #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-        *registerSize = swapUint32(*registerSize);
-    #endif
-
-    return false;
+    return 0;
 }
-bool checkAllocError(FILE *restrict file, void *restrict ptr) { // true если ошибка
-    if (ptr == NULL) {
-        fclose(file);
-        printf(ERRCODE_4);
-        return true;
-    }
-
-    return false;
-}
-
-int executeBytecode(const char *restrict const filename, uint64_t stackSize) {
 
 int main(int argc, char *argv[]) {
     char *filename;
+    uint64_t stackSize = STD_STACKSIZE;
 
     if (argc == 1) {
         printf("Calclang Virtual Machine (v.%s)\n", VERSION_VM);
         printf("Using:\n");
-        printf("\tcalclang {bytecode filename}\n");
+        printf("\tcalclang <bytecode filename>\n");
         return 0;
-    } else if (argc > 2) {
-        printf("Too many arguments!");
-        return 1;
-    } else if (argc == 2) {
-
-        filename = argv[1];
     }
 
-    int exitCode = executeBytecode(filename);
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-ss") == 0) { /* stack size */
+            if ((i + 1) >= argc) {
+                fprintf(stderr, ERRCODE_1);
+                return 1;
+            }
+
+            i++;
+
+            if (strcmp
+
+    FILE *file = fopen(filename, "rb");
+    if (file == NULL) {
+        fprintf(stderr, ERRCODE_3);
+        return 3;
+    }
+
+    int exitCode = executeBytecode(file, stackSize);
 
     return exitCode;
 }
