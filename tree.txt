@@ -1,0 +1,46 @@
+│   .gitattributes
+│   .gitignore
+│   gccwinbuild.bat
+│   LICENSE.txt
+│   README.md
+│   tree.txt
+│   
+├───bin
+├───objects
+├───src
+│   │   bytecode.h
+│   │   calclang.c
+│   │   clasm.c
+│   │   clcomp.c
+│   │   cllnk.c
+│   │   README.txt
+│   │   
+│   ├───asm
+│   ├───compiler
+│   │       clanalys.c
+│   │       clanalys.h
+│   │       clast.c
+│   │       clast.h
+│   │       clproc.c
+│   │       clproc.h
+│   │       
+│   ├───libs
+│   │   │   README.txt
+│   │   │   
+│   │   ├───stdio
+│   │   ├───stdrand
+│   │   └───stdtime
+│   └───utils
+│           fexists.c
+│           fexists.h
+│           fexists.o
+│           filestr.c
+│           filestr.h
+│           str2.c
+│           strconverts.c
+│           swapvalue.h
+│           swapvalue_unix64.asm
+│           swapvalue_win64.asm
+│           swapvalue_win64.o
+│           
+
